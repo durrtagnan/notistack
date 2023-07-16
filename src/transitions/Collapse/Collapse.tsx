@@ -26,11 +26,12 @@ const timeout = 175;
 interface CollapseProps {
     children: JSX.Element;
     in: boolean;
+    disablePointerEvents: boolean | undefined;
     onExited: TransitionProps['onExited'];
 }
 
 const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) => {
-    const { children, in: inProp, onExited } = props;
+    const { children, in: inProp, disablePointerEvents, onExited } = props;
 
     const wrapperRef = React.useRef<HTMLDivElement>(null);
 
@@ -98,7 +99,7 @@ const Collapse = React.forwardRef<HTMLDivElement, CollapseProps>((props, ref) =>
                     ref={handleRef}
                     className={clsx(classes.root, { [classes.entered]: state === 'entered' })}
                     style={{
-                        pointerEvents: 'all',
+                        pointerEvents: disablePointerEvents ? 'none' : 'all',
                         overflow: 'hidden',
                         minHeight: collapsedSize,
                         transition: createTransition('height'),

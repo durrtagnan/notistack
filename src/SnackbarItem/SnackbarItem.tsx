@@ -108,10 +108,11 @@ const SnackbarItem: React.FC<SnackbarItemProps> = (props) => {
     );
 
     return (
-        <Collapse in={collapsed} onExited={callbacks.onExited}>
+        <Collapse disablePointerEvents={otherSnack.disablePointerEvents} in={collapsed} onExited={callbacks.onExited}>
             <Snackbar
                 open={open}
                 id={otherSnack.id}
+                message={otherSnack.message}
                 disableWindowBlurListener={disableWindowBlurListener}
                 autoHideDuration={otherSnack.autoHideDuration}
                 className={clsx(

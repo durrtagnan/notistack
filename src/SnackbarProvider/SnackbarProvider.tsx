@@ -76,7 +76,7 @@ class SnackbarProvider extends Component<SnackbarProviderProps, State> {
             ? messageOrOptions.message
             : messageOrOptions;
 
-        const { key, preventDuplicate, ...options } = opts;
+        const { key, replaceExisting, preventDuplicate, ...options } = opts;
 
         const hasSpecifiedKey = isDefined(key);
         const id = hasSpecifiedKey ? (key as SnackbarKey) : new Date().getTime() + Math.random();
@@ -87,7 +87,7 @@ class SnackbarProvider extends Component<SnackbarProviderProps, State> {
             ...options,
             message,
             open: true,
-            entered: false,
+            entered: replaceExisting && hasSpecifiedKey ? true : false,
             requestClose: false,
             persist: merger('persist'),
             action: merger('action'),
@@ -111,6 +111,30 @@ class SnackbarProvider extends Component<SnackbarProviderProps, State> {
         }
 
         this.setState((state) => {
+            if (replaceExisting && hasSpecifiedKey) {
+                const snackIndex: number = state.snacks.findIndex((s: InternalSnack): boolean => s.id === id);
+                if (snackIndex !== -1) {
+                    const newSnacks: InternalSnack[] = [...state.snacks];
+
+                    newSnacks[snackIndex] = snack;
+                    return {
+                        ...state,
+                        snacks: newSnacks,
+                    };
+                }
+
+                const queueIndex: number = state.queue.findIndex((s: InternalSnack): boolean => s.id === id);
+                if (queueIndex !== -1) {
+                    const newQueue: InternalSnack[] = [...state.queue];
+
+                    newQueue[snackIndex] = snack;
+                    return {
+                        ...state,
+                        queue: newQueue,
+                    };
+                }
+            }
+
             if ((preventDuplicate === undefined && this.props.preventDuplicate) || preventDuplicate) {
                 const compareFunction = (item: InternalSnack): boolean =>
                     hasSpecifiedKey ? item.id === id : item.message === message;

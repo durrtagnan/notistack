@@ -1,7 +1,7 @@
 {
-    "name": "notistack",
+    "name": "@durrtagnan/notistack",
     "version": "3.0.1",
-    "description": "Highly customizable notification snackbars (toasts) that can be stacked on top of each other",
+    "description": "Fork of highly customizable notification snackbars (toasts) that can be stacked on top of each other",
     "main": "./index.js",
     "module": "./notistack.esm.js",
     "types": "./index.d.ts",
@@ -13,7 +13,7 @@
     },
     "homepage": "https://www.notistack.com",
     "repository": {
-        "url": "git+https://github.com/iamhosseindhv/notistack.git",
+        "url": "git+https://github.com/durrtagnan/notistack.git",
         "type": "git"
     },
     "scripts": {

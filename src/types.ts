@@ -247,6 +247,8 @@ export interface SharedProps<V extends VariantType = VariantType> extends Partia
      * @default false
      */
     preventDuplicate?: boolean;
+    replaceExisting?: boolean;
+    disablePointerEvents?: boolean;
     /**
      * Callback used for getting action(s). actions are mostly buttons displayed in Snackbar.
      * @param {string|number} key key of a snackbar

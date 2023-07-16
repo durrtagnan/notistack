@@ -4,7 +4,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import useEventCallback from '../utils/useEventCallback';
-import { CloseReason, SharedProps, SnackbarKey } from '../types';
+import { CloseReason, SharedProps, SnackbarKey, SnackbarMessage } from '../types';
 import { ComponentClasses } from '../utils/styles';
 
 interface SnackbarProps extends Required<Pick<SharedProps, 'disableWindowBlurListener' | 'onClose'>> {
@@ -13,6 +13,7 @@ interface SnackbarProps extends Required<Pick<SharedProps, 'disableWindowBlurLis
     className: string;
     children: JSX.Element;
     autoHideDuration: number | null | undefined;
+    message: SnackbarMessage;
     SnackbarProps: SharedProps['SnackbarProps'];
 }
 
@@ -22,6 +23,7 @@ const Snackbar = React.forwardRef<HTMLDivElement, SnackbarProps>((props, ref) =>
         className,
         autoHideDuration,
         disableWindowBlurListener = false,
+        message,
         onClose,
         id,
         open,
@@ -59,7 +61,7 @@ const Snackbar = React.forwardRef<HTMLDivElement, SnackbarProps>((props, ref) =>
                 clearTimeout(timerAutoHide.current);
             }
         };
-    }, [open, autoHideDuration, setAutoHideTimer]);
+    }, [open, message, autoHideDuration, setAutoHideTimer]);
 
     /**
      * Pause the timer when the user is interacting with the Snackbar
